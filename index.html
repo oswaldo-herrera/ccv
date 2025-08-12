@@ -189,7 +189,7 @@ https://templatemo.com/tm-557-grad-school
         <div class="col-md-7 col-xs-12">
           <div class="continer centerIt">
             <div>
-              <h4><em>¡Inscríbete ahora!</em> y empieza tu camino digital</h4>
+              <h4>¡Inscríbete ahora!<em> obten un regalo y un 20% en tu primer curso </em> empieza tu camino digital</h4>
               <div class="counter">
 
                 <div class="days">
@@ -222,12 +222,27 @@ https://templatemo.com/tm-557-grad-school
               <h6>Escríbenos directo y <em>te ayudamos a inscribirte</em></h6>
             </div>
             <div class="text-center mt-5">
-            <a href="https://wa.me/5214793153325?text=Hola%2C%20quiero%20información%20sobre%20los%20cursos%20de%20programación" 
+            
+              <form id="formInscripcion" method="POST">
+                <div class="form-group">
+                  <label for="nombre">Nombre</label>
+                  <input type="text" id="nombre" name="Nombre" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="correo">Correo electrónico</label>
+                  <input type="email" id="correo" name="Correo electrónico" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+              </form>
+              <div id="mensaje"></div>
+            <!-- <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdf7sM4q3cDOyycSFb6azn-g5SjkPe4fcBk1Lr3v1UlfMpruA/viewform?embedded=true" width="640" height="584" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe> -->
+
+            <!-- <a href="https://wa.me/5214793153325?text=Hola%2C%20quiero%20información%20sobre%20los%20cursos%20de%20programación" 
                target="_blank" 
                class="button" 
                style="display:inline-block;padding:12px 25px;background:#25D366;color:white;border-radius:5px;text-decoration:none;font-weight:bold;">
               Hablar por WhatsApp
-            </a>
+            </a> -->
           </div>
           </div>
         </div>
@@ -461,6 +476,35 @@ https://templatemo.com/tm-557-grad-school
     <script src="assets/js/video.js"></script>
     <script src="assets/js/slick-slider.js"></script>
     <script src="assets/js/custom.js"></script>
+
+    <script>
+    document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        Nombre: form["Nombre"].value,
+        "Correo electrónico": form["Correo electrónico"].value
+      };
+
+      try {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbwBe5Ap65dzLCwNKcB_7OrfHanRzJtZ2FkybmCLzxU1U5Z1GpRAX3eB0RcbtRmabUaRyA/exec', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {'Content-Type': 'application/json'}
+        });
+        if (res.ok) {
+          document.getElementById('mensaje').textContent = '¡Gracias por inscribirte! Revisa tu correo.';
+          form.reset();
+        } else {
+          document.getElementById('mensaje').textContent = 'Error al enviar, intenta de nuevo.';
+        }
+      } catch(err) {
+        document.getElementById('mensaje').textContent = 'Error al enviar, intenta de nuevo.';
+      }
+    });
+  </script>
+
+
     <script>
         //according to loftblog tut
         $('.nav li:first').addClass('active');
