@@ -478,31 +478,28 @@ https://templatemo.com/tm-557-grad-school
     <script src="assets/js/custom.js"></script>
 
     <script>
-    document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = {
-        Nombre: form["Nombre"].value,
-        "Correo electrónico": form["Correo electrónico"].value
-      };
+      document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = {
+          Nombre: form["Nombre"].value,
+          "Correo electrónico": form["Correo electrónico"].value
+        };
 
-      try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbwBe5Ap65dzLCwNKcB_7OrfHanRzJtZ2FkybmCLzxU1U5Z1GpRAX3eB0RcbtRmabUaRyA/exec', {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: {'Content-Type': 'application/json'}
-        });
-        if (res.ok) {
+        try {
+          await fetch('https://script.google.com/macros/s/AKfycbwBe5Ap65dzLCwNKcB_7OrfHanRzJtZ2FkybmCLzxU1U5Z1GpRAX3eB0RcbtRmabUaRyA/exec', {
+            method: 'POST',
+            mode: 'no-cors', // <--- clave para evitar bloqueo CORS
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+          });
           document.getElementById('mensaje').textContent = '¡Gracias por inscribirte! Revisa tu correo.';
           form.reset();
-        } else {
+        } catch(err) {
           document.getElementById('mensaje').textContent = 'Error al enviar, intenta de nuevo.';
         }
-      } catch(err) {
-        document.getElementById('mensaje').textContent = 'Error al enviar, intenta de nuevo.';
-      }
-    });
-  </script>
+      });
+    </script>
 
 
     <script>
