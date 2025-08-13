@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="assets/css/templatemo-grad-school.css">
     <link rel="stylesheet" href="assets/css/owl.css">
     <link rel="stylesheet" href="assets/css/lightbox.css">
+    <link rel="stylesheet" href="assets/css/whats.css">
+    <link rel="stylesheet" href="assets/css/whats2.css">
     <style>
       .hov{
         color: orange;
@@ -456,7 +458,7 @@
             <div class="row">
               <div class="col-md-6">
                   <fieldset>
-                    <input name="name" type="text" class="form-control" id="name" placeholder="Tu Nombre Completo" required="">
+                    <input name="nombre" type="text" class="form-control" id="name" placeholder="Tu Nombre Completo" required="">
                   </fieldset>
                 </div>
                 <div class="col-md-6">
@@ -466,7 +468,7 @@
                 </div>
               <div class="col-md-12">
                 <fieldset>
-                  <textarea name="message" rows="6" class="form-control" id="message" placeholder="Tu mensaje..." required=""></textarea>
+                  <textarea name="mensaje" rows="6" class="form-control" id="message" placeholder="Tu mensaje..." required=""></textarea>
                 </fieldset>
               </div>
               <div class="col-md-12">
@@ -485,6 +487,31 @@
       </div>
     </div>
   </section>
+  <!-- whatsapp boton -->
+  <div class="nav-bottom">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <div class="popup-whatsapp fadeIn">
+        <div class="content-whatsapp -top">
+          <button type="button" class="closePopup">
+            <i class="material-icons icon-font-color">close</i>
+          </button>
+          <p> <img src="/assets/images/oswaldo.png" width="50"> Hola, ¿en que podemos ayudarte? </p>
+
+        </div>
+        <div class="content-whatsapp -bottom">
+            <input class="whats-input" id="whats-in" type="text" Placeholder="Enviar mensaje..." />
+            <button class="send-msPopup" id="send-btn" type="button">
+                <i class="material-icons icon-font-color--black">send</i>
+            </button>
+        </div>
+    </div>
+    <button type="button" id="whats-openPopup" class="whatsapp-button">
+        <div class="float">
+            <i class="fa fa-whatsapp my-float"></i>
+        </div>
+    </button>
+    <div class="circle-anime"></div>
+  </div>
 
   <footer>
     <div class="container">
@@ -510,7 +537,65 @@
     <script src="assets/js/video.js"></script>
     <script src="assets/js/slick-slider.js"></script>
     <script src="assets/js/custom.js"></script>
+    <script src="assets/js/script2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      document.getElementById('contact').addEventListener('submit', async function(e){
+          e.preventDefault();
+          const form = e.target;
+          const data = new FormData(form);
+
+          // Mostrar SweetAlert de "Enviando..."
+          Swal.fire({
+              title: 'Enviando...',
+              text: 'Por favor espera',
+              allowOutsideClick: false,
+              didOpen: () => {
+                  Swal.showLoading()
+              }
+          });
+
+          try {
+              // Enviar datos al Google Apps Script
+              const response = await fetch('https://script.google.com/macros/s/AKfycbwuNO-LYxrH9UIyLZowEbu2bIg7apEKlmUgzSc2QdQZ4GSTCwPCOkFDvYUhIrtf2gCXeQ/exec', { 
+                  method: 'POST', 
+                  body: data 
+              });
+
+              if (response.ok) {
+                  Swal.fire({
+                      icon: 'success',
+                      title: '¡Mensaje enviado!',
+                      text: 'Gracias por contactarnos.',
+                      timer: 3000,
+                      showConfirmButton: false
+                  });
+                  form.reset();
+              } else {
+                  throw new Error('Error al enviar');
+              }
+          } catch (error) {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'No se pudo enviar el mensaje. Intenta nuevamente.'
+              });
+              console.error(error);
+          }
+      });
+    </script>
+
+    <!-- <script>
+      document.getElementById('contact').addEventListener('submit', async function(e){
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        await fetch('https://script.google.com/macros/s/AKfycbwuNO-LYxrH9UIyLZowEbu2bIg7apEKlmUgzSc2QdQZ4GSTCwPCOkFDvYUhIrtf2gCXeQ/exec', { method: 'POST', body: data });
+        alert('¡Mensaje enviado!');
+        form.reset();
+      });
+    </script> -->
 
     <script>
       document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
