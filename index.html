@@ -548,7 +548,6 @@
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/script2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-   
 
     <script>
       document.getElementById('contact').addEventListener('submit', async function(e){
@@ -567,8 +566,102 @@
           });
 
           try {
+              // Enviar datos al Google Apps Script con la corrección del "mode"
+              const response = await fetch('https://script.google.com/macros/s/AKfycby45CIywmGo-hgRHM2MU1JpgS0VRpm_9gecK7tIFGgqEJwMaK-HjCv8WzSokVsHwdWbuQ/exec', { 
+                  method: 'POST', 
+                  mode: 'cors', // AGREGADO: Crucial para la comunicación entre dominios
+                  body: data 
+              });
+
+              if (response.ok) {
+                  Swal.fire({
+                      icon: 'success',
+                      title: '¡Mensaje enviado!',
+                      text: 'Gracias por contactarnos.',
+                      timer: 3000,
+                      showConfirmButton: false
+                  });
+                  form.reset();
+              } else {
+                  throw new Error('Error al enviar. Código de estado: ' + response.status);
+              }
+          } catch (error) {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'No se pudo enviar el mensaje. Intenta nuevamente.'
+              });
+              console.error(error);
+          }
+        });
+    </script>
+
+    <!-- <script>
+      document.getElementById('contact').addEventListener('submit', async function(e){
+          e.preventDefault();
+          const form = e.target;
+          const data = new FormData(form);
+
+          // Mostrar SweetAlert de "Enviando..."
+          Swal.fire({
+              title: 'Enviando...',
+              text: 'Por favor espera',
+              allowOutsideClick: false,
+              didOpen: () => {
+                  Swal.showLoading()
+              }
+          });
+
+          try {
               // Enviar datos al Google Apps Script
-              const response = await fetch('https://script.google.com/macros/s/AKfycbwuNO-LYxrH9UIyLZowEbu2bIg7apEKlmUgzSc2QdQZ4GSTCwPCOkFDvYUhIrtf2gCXeQ/exec', { 
+              const response = await fetch('https://script.google.com/macros/s/AKfycbyxeDVpV5yJO7T5dOtXvuV4Gx0RKZE5QJaE6xeiQy9o01H9k-0VyUCP2z87UDMY8YS3_Q/exec', { 
+                  method: 'POST',
+                  mode: 'cors', 
+                  body: data 
+              });
+
+              if (response.ok) {
+                  Swal.fire({
+                      icon: 'success',
+                      title: '¡Mensaje enviado!',
+                      text: 'Gracias por contactarnos.',
+                      timer: 3000,
+                      showConfirmButton: false
+                  });
+                  form.reset();
+              } else {
+                  throw new Error('Error al enviar');
+              }
+          } catch (error) {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'No se pudo enviar el mensaje. Intenta nuevamente.'
+              });
+              console.error(error);
+          }
+      });
+    </script> -->
+
+    <!-- <script>
+      document.getElementById('contact').addEventListener('submit', async function(e){
+          e.preventDefault();
+          const form = e.target;
+          const data = new FormData(form);
+
+          // Mostrar SweetAlert de "Enviando..."
+          Swal.fire({
+              title: 'Enviando...',
+              text: 'Por favor espera',
+              allowOutsideClick: false,
+              didOpen: () => {
+                  Swal.showLoading()
+              }
+          });
+
+          try {
+              // Enviar datos al Google Apps Script
+              const response = await fetch('https://script.google.com/macros/s/AKfycbyxeDVpV5yJO7T5dOtXvuV4Gx0RKZE5QJaE6xeiQy9o01H9k-0VyUCP2z87UDMY8YS3_Q/exec', { 
                   method: 'POST', 
                   body: data 
               });
@@ -594,7 +687,7 @@
               console.error(error);
           }
       });
-    </script>
+    </script> -->
 
     <!-- <script>
       document.getElementById('contact').addEventListener('submit', async function(e){
@@ -608,6 +701,152 @@
     </script> -->
 
     <script>
+      document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+
+        Swal.fire({
+          title: 'Enviando...',
+          text: 'Por favor espera un momento',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        try {
+          // AQUÍ ES DONDE DEBES PEGAR LA NUEVA URL
+          const response = await fetch('https://script.google.com/macros/s/AKfycbwwBHjEBZmaGpYyLx9y9R6_NiZyxxNtj1nOKgUIYpzUQxsKQ_jENsP2nMz-ZCMJfR4FiQ/exec', { 
+            method: 'POST',
+            mode: 'cors',
+            body: formData 
+          });
+
+          if (response.ok) {
+            Swal.fire({
+              icon: 'success',
+              title: '¡Registro exitoso!',
+              text: 'Revisa tu correo para más información.',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Aceptar'
+            });
+            form.reset();
+          } else {
+            throw new Error('Error al enviar el formulario');
+          }
+
+        } catch(err) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un problema, intenta de nuevo.',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Cerrar'
+          });
+          console.error(err);
+        }
+      });
+    </script>
+
+
+    <!-- <script>
+      document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Mostrar loader mientras se envía
+        Swal.fire({
+          title: 'Enviando...',
+          text: 'Por favor espera un momento',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        try {
+          // La URL de tu Google Apps Script
+          await fetch('https://script.google.com/macros/s/AKfycbyLaAWIloWyYZb9d4I_ApOdq1qRK1RlcD-gUsavKCN-arMYdf56SsoeW3hJ4clUP7n3oA/exec', {
+            method: 'POST',
+            mode: 'cors',
+            body: formData // Esto envía los datos como espera Google Apps Script
+          });
+
+          // Cerrar loader y mostrar éxito
+          Swal.fire({
+            icon: 'success',
+            title: '¡Registro exitoso!',
+            text: 'Revisa tu correo para más información.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+          });
+
+          form.reset();
+        } catch(err) {
+          // Cerrar loader y mostrar error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un problema, intenta de nuevo.',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Cerrar'
+          });
+        }
+      });
+    </script> -->
+
+    <!-- <script>
+      document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
+        e.preventDefault(); // Esto evita que el formulario se envíe de la manera tradicional
+        
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Muestra el loader mientras se envía
+        Swal.fire({
+          title: 'Enviando...',
+          text: 'Por favor, espera un momento',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        try {
+          // La URL de tu Google Apps Script
+          await fetch('https://script.google.com/macros/s/AKfycbwQLByu_3MH1MP_PH0xJVdB9sL9rISjbMViSQv5AtTe7_0g8D08Vu6c7N6hqnpaY8CI3A/exec', {
+            method: 'POST',
+            body: formData
+          });
+
+          // Cierra el loader y muestra el mensaje de éxito
+          Swal.fire({
+            icon: 'success',
+            title: '¡Registro exitoso!',
+            text: 'Revisa tu correo para más información.',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Aceptar'
+          });
+
+          // Limpia los campos del formulario
+          form.reset();
+
+        } catch(err) {
+          // Cierra el loader y muestra el mensaje de error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Ocurrió un problema, intenta de nuevo.',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Cerrar'
+          });
+        }
+      });
+</script> -->
+
+    <!-- <script>
       document.getElementById('formInscripcion').addEventListener('submit', async function(e) {
         e.preventDefault();
         const form = e.target;
@@ -627,7 +866,7 @@
         });
 
         try {
-          await fetch('https://script.google.com/macros/s/AKfycbyygoQlrG4W7mbWmPNKkvJ0cht507i-1pO1mhYPCI5nxuZzIheL72yekbgt21yyefCjqw/exec', {
+          await fetch('https://script.google.com/macros/s/AKfycbyeAuBSdWojIZ-3V28Pfok5wDVPHROUuKQyNpAjtnYvgiydZa7QLaJuTpu6nguvJVL9aA/exec', {
             method: 'POST',
             mode: 'no-cors', 
             headers: {'Content-Type': 'application/json'},
@@ -655,7 +894,7 @@
           });
         }
       });
-    </script>
+    </script> -->
 
 
     <!-- <script>
@@ -668,7 +907,7 @@
         };
 
         try {
-          await fetch('https://script.google.com/macros/s/AKfycbyygoQlrG4W7mbWmPNKkvJ0cht507i-1pO1mhYPCI5nxuZzIheL72yekbgt21yyefCjqw/exec', {
+          await fetch('https://script.google.com/macros/s/AKfycbyLaAWIloWyYZb9d4I_ApOdq1qRK1RlcD-gUsavKCN-arMYdf56SsoeW3hJ4clUP7n3oA/exec', {
             method: 'POST',
             mode: 'no-cors', // <--- clave para evitar bloqueo CORS
             headers: {'Content-Type': 'application/json'},
